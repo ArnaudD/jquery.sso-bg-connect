@@ -1,27 +1,81 @@
 
-This jquery plugin tries to connect your visitor to the SSO service(s) of your choice.
-Once authenticated you can redirect him or call your own js function.
+SSO Background Connect, the peaceful authentication
+===================================================
 
-It can be useful when you're using multiple authentication strategies : local db, facebook, twitter, etc.
+This jquery plugin tries to connect your visitors to the SSO service(s) of your choice
+on pages that doesn't necessarily require to be authenticated.
+
+Most of your users are already connected on one or more SSO services, in this case the plugin will
+be able to quietly log them in your web application and notify the web browser.
+
+The user experience is enhanced by removing the need for your users to click on some login link.
+
+It can also be useful when you're using multiple authentication strategies : local db, facebook, twitter, etc.
+
 
 Example :
+=========
 
     $.ssoBgConnect ({
-	  services: [
-	  	{
-		  service: "https://cas.univ-avignon.fr/?service={%callback%}",
-	  	  callback: "http://yoursite.com/CasLogin"
-	    },
-	  	{
-		  service: "twitter"
-	  	  callback: "http://yoursite.com/TwitterLogin"
+      services: [
+        {
+          service: "https://cas.univ-avignon.fr/?service={%callback%}",
+          callback: "http://yoursite.com/CasLogin"
+        },
+        {
+          service: "twitter"
+          callback: "http://yoursite.com/TwitterLogin"
           api_key= "YOUR_APP_ID"
-	    },
-	  	{
-		  service: "facebook"
-	  	  callback: "http://yoursite.com/FacebookLogin"
+        },
+        {
+          service: "facebook"
+          callback: "http://yoursite.com/FacebookLogin"
           api_key= "YOUR_APP_ID"
-	    }
-	  ],
-	  success: ""
-	});
+        }
+      ],
+      success: function () { /* do something */ }
+    });
+
+
+How does it work ?
+==================
+
+1. On the client side, the ssoBgConnect open as many iframes as you have configured SSO services. 
+   Each iframe is pointing to each SSO login url.
+
+2. If the user is authenticated on the SSO, the iframe will be redirected to your web server
+   in order for you to identify him and log him in. 
+
+3. Once logged in, you will have to notify the parent frame that the user is known
+   by returning a script to the iframe containing : 
+   `parent.$.ssoBgConnect ('finishAuthentication', {some data});`, which will fire
+   the `success` event handler.
+   See the [example identification script](https://github.com/ArnaudD/jquery.sso-bg-connect/blob/master/examples/dumbLogin.php)
+
+
+API documentation, `ssoBgConnect()` options
+===========================================
+
+ssoBgConnect take an array containing the following keys as parameter.
+
+`services`
+----------
+
+Array describing each SSO service. Each service array must contain at least a `service` key which is
+the SSO login url or a preconfigured SSO alias. If you provide an url don't forget to include
+the correct GET parametter in order for the SSO to redirect the iframe back to you.
+
+The `callback` key is mandatory. If used the plugin will encode it and substitute the `{%callback%}` token
+for you in the `service` key. If you ommit it don't forget to encode and include it
+in the service url !
+
+You can also add other options that will be passed to the SSO handler, an api_key for example.
+
+`success`
+---------
+
+callback or url (null by default).
+
+if null, the plugin will reload the web page. If it is an url, the user will be redirected to this url.
+Otherwise the callback will be fired.
+    

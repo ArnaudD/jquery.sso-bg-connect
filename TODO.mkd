@@ -1,0 +1,13 @@
+
+* Handle user data in the finishAuthentication method
+* Add a GET parameter (bgConnect=1) to the callback URL in order to be able
+  to distinguish the authentication strategy.
+* Add a way to load preconfigured SSO with plugins (look at jquery-ui i18n handling)
+* Add more preconfigured SSO :
+  * Generic OAuth
+  * Generic OpenID
+  * Facebook
+  * Twitter
+  * Google
+  * etc
+* Handle SSO priority ?
