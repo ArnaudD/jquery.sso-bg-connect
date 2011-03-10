@@ -9,17 +9,17 @@ Example :
     $.ssoBgConnect ({
 	  services: [
 	  	{
+		  service: "https://cas.univ-avignon.fr/?service={%callback%}",
 	  	  callback: "http://yoursite.com/CasLogin"
-		  url: "https://cas.univ-avignon.fr?service={{callback}}",
 	    },
 	  	{
+		  service: "twitter"
 	  	  callback: "http://yoursite.com/TwitterLogin"
-		  url: "twitter"
           api_key= "YOUR_APP_ID"
-	    }
+	    },
 	  	{
+		  service: "facebook"
 	  	  callback: "http://yoursite.com/FacebookLogin"
-		  url: "facebook"
           api_key= "YOUR_APP_ID"
 	    }
 	  ],

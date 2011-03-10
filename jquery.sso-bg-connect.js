@@ -1,8 +1,7 @@
 (function ($){
 
-  var loadIframe = function (url, id) {
-        $(document).append ('<iframe id="ssoBgConnect_'+id+'" src="'+url+'" width="1px" height="1px" style="visibility: hidden;"></iframe>');       
-
+  var loadIframe = function (service, id) {
+        $('body').append ('<iframe id="ssoBgConnect_'+id+'" src="'+service+'" width="1px" height="1px" style="visibility: hidden;"></iframe>');       
   }
 
   var settings = {
@@ -10,7 +9,7 @@
     success: '',
     servicesHandlers: {
       generic: function (serviceConf) {
-        loadIframe (service.url.replace ('{{callback}}', encodeURIComponent (settings.success)), );
+        loadIframe (serviceConf.service.replace ('{%callback%}', encodeURIComponent (serviceConf.callback)), 1);
       },
       facebook: function (serviceConf) {
         /* TODO */
@@ -34,8 +33,8 @@
 
       // For each service call the appropriate handler
       $.each (settings.services, function (index, service) {
-        if (settings.servicesHandlers [service.url])
-          settings.servicesHandlers [service.url] (service);
+        if (settings.servicesHandlers [service.service])
+          settings.servicesHandlers [service.service] (service);
         else 
           settings.servicesHandlers.generic (service);
       });
@@ -55,7 +54,7 @@
     },
   };
 
-  $.fn.ssoBgConnect = function (method) {
+  $.ssoBgConnect = function (method) {
     
     if ( methods [method] ) {
       return methods [method].apply (this, Array.prototype.slice.call (arguments, 1));
