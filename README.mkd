@@ -1,0 +1,27 @@
+
+This jquery plugin tries to connect your visitor to the SSO service(s) of your choice.
+Once authenticated you can redirect him or call your own js function.
+
+It can be useful when you're using multiple authentication strategies : local db, facebook, twitter, etc.
+
+Example :
+
+    $.ssoBgConnect ({
+	  services: [
+	  	{
+	  	  callback: "http://yoursite.com/CasLogin"
+		  url: "https://cas.univ-avignon.fr?service={{callback}}",
+	    },
+	  	{
+	  	  callback: "http://yoursite.com/TwitterLogin"
+		  url: "twitter"
+          api_key= "YOUR_APP_ID"
+	    }
+	  	{
+	  	  callback: "http://yoursite.com/FacebookLogin"
+		  url: "facebook"
+          api_key= "YOUR_APP_ID"
+	    }
+	  ],
+	  success: ""
+	});
