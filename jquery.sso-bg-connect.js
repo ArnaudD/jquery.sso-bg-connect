@@ -16,7 +16,14 @@
         loadIframe (serviceConf.service.replace ('{%callback%}', encodeURIComponent (serviceConf.callback)), 1);
       },
       facebook: function (serviceConf) {
-        /* TODO */
+        var serviceUrl = 'https://www.facebook.com/login.php?api_key='
+            +serviceConf.appId
+            +'&v=1.0'
+            +'&return_session=1'
+            +'&session_version=3'
+            +'&next='+encodeURIComponent (serviceConf.callback);
+        // TODO handle cancel url
+        loadIframe (serviceUrl, 2);
       },
       twitter: function (serviceConf) {
         /* TODO */
@@ -48,9 +55,9 @@
     /**
      * Method called once the user has been authenticated
      */
-    finishAuthentication: function (options) { 
+    finishAuthentication: function (data) { 
       if (typeof settings.success === 'function')
-        settings.success (options);
+        settings.success (data);
       else if (typeof settings.success.length > 0)
         document.location.href = settings.success ;
       else
