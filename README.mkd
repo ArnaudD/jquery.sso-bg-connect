@@ -23,14 +23,14 @@ Example :
           callback: "http://yoursite.com/CasLogin"
         },
         {
-          service: "twitter"
-          callback: "http://yoursite.com/TwitterLogin"
-          api_key= "YOUR_APP_ID"
+          service: "twitter",
+          callback: "http://yoursite.com/TwitterLogin",
+          appId: "YOUR_APP_ID"
         },
         {
-          service: "facebook"
-          callback: "http://yoursite.com/FacebookLogin"
-          api_key= "YOUR_APP_ID"
+          service: "facebook",
+          callback: "http://yoursite.com/FacebookLogin",
+          appId: "YOUR_APP_ID"
         }
       ],
       success: function () { /* do something */ }
