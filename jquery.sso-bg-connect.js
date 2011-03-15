@@ -5,7 +5,7 @@
 (function ($){
 
   var loadIframe = function (service, id) {
-        $('body').append ('<iframe id="ssoBgConnect_'+id+'" src="'+service+'" width="1px" height="1px" style="visibility: hidden;"></iframe>');       
+    $('body').append ('<iframe id="ssoBgConnect_'+id+'" src="'+service+'" width="1px" height="1px" style="visibility: hidden;"></iframe>');       
   }
 
   var settings = {
@@ -38,16 +38,25 @@
      */
     connect: function (options) {
 
-      if (options) { 
+      if (options)
         $.extend( settings, options );
-      }
 
-      // For each service call the appropriate handler
       $.each (settings.services, function (index, service) {
+
+        // If a callback has been provided, we'll append additional data
+        if (service.callback) {
+          if (service.callback == 'self')
+            service.callback == document.location.href;
+          
+          service.callback += (service.callback.search (/\?/) < 0 ? '?' : '&') + 'bgConnect=1';
+        }
+
+        // call the appropriate service handler
         if (settings.servicesHandlers [service.service])
           settings.servicesHandlers [service.service] (service);
         else 
           settings.servicesHandlers.generic (service);
+
       });
 
     },

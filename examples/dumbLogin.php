@@ -11,9 +11,11 @@
     // Retrieve user from the local database and log him in.
     // ...
 
-    $userData = array (
-        'username' => 'foobar',
-        'foo' => 'bar',
+
+    session_start ();
+    $_SESSION['user'] = array (
+        'name' => 'foobar',
+        'sso'  => 'dumb',
     );
 
     // We're done, now we have to inform the calling frame that the user has been authenticated
@@ -23,7 +25,7 @@
 <html>
 <head></head>
 <body><script type="text/javascript">
-parent.jQuery.ssoBgConnect ('finishAuthentication', <?php echo json_encode ($userData) ?>);
+parent.jQuery.ssoBgConnect ('finishAuthentication', <?php echo json_encode ($_SESSION['user']) ?>);
 </script></body>
 </html>
 
