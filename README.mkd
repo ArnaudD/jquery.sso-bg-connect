@@ -2,16 +2,36 @@
 SSO Background Connect, the peaceful authentication
 ===================================================
 
-This jquery plugin tries to connect your visitors to the SSO service(s) of your choice
-on pages that doesn't necessarily require to be authenticated.
+This jquery plugin tries to loggin your visitors by using their prefered SSO service(s).
 
-Most of your users are already connected on one or more SSO services, in this case the plugin will
+Improve UX
+----------
+
+Most of your users are already connected on one or more SSO providers, in this case the plugin will
 be able to quietly log them in your web application and notify the web browser.
 
-The user experience is enhanced by removing the need for your users to click on some login link.
+On pages that doesn't necessarily require to be authenticated you will be able to enable
+new features on the fly or by refreshing the web page.
 
-It can also be useful when you're using multiple authentication strategies : local db, facebook, twitter, etc.
+All of the login process is done without needing the user to click on his prefered SSO, 
+resulting in a painful login experience.
 
+Power to the People ! Allow several SSO
+---------------------------------------
+
+Of course some javascript sdk like facebook [connect-js](https://github.com/facebook/connect-js) have 
+a "background" connection feature, but the power of this plugin is letting your users rely on more SSO
+than just "Facebook". Your users should be able choose between several SSO for the sake of an open web.
+
+Not every SSO service provide a javascript sdk like connect-js. Even if they do,
+enabling several SSO would mean loading more javascript libraries (more bandwidth), 
+learning how to use each library, etc. This plugin is a all-in-one SSO helper.
+
+
+Extend it with your plugins
+---------------------------
+
+TODO
 
 Example :
 =========
@@ -36,6 +56,7 @@ Example :
       success: function () { /* do something */ }
     });
 
+Check the [example](https://github.com/ArnaudD/jquery.sso-bg-connect/blob/master/examples/index.php).
 
 How does it work ?
 ==================
@@ -79,3 +100,18 @@ callback or url (null by default).
 if null, the plugin will reload the web page. If it is an url, the user will be redirected to this url.
 Otherwise the callback will be fired.
     
+
+
+What this plugin does not do ?
+==============================
+
+* This plugin is not an OpenId/OAuth/... client, you still write the glue code to integrate with each SSO client.
+* This plugin will not log the users in if they haven't granted your application the right to access to their account.
+
+Related libraries
+=================
+
+* [OpenId Selector](http://code.google.com/p/openid-selector/)
+
+
+
